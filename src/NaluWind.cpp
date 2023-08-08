@@ -15,14 +15,14 @@ void NaluWind::initialize()
 {
     Kokkos::initialize();
     // Hypre initialization
-    nalu_hypre::hypre_initialize();
-    nalu_hypre::hypre_set_params();
+    nalu_hypre::nalu_hypre_initialize();
+    nalu_hypre::nalu_hypre_set_params();
 }
 
 void NaluWind::finalize()
 {
     // Hypre cleanup
-    nalu_hypre::hypre_finalize();
+    nalu_hypre::nalu_hypre_finalize();
 
     if (Kokkos::is_initialized()) {
         Kokkos::finalize();

@@ -35,8 +35,7 @@ endif()
 
 set(CMAKE_PREFIX_PATH ${Trilinos_DIR} ${TIOGA_DIR}
                       ${Nalu-Wind_DIR} ${AMR-Wind_DIR}
-                      ${HYPRE_DIR} ${NetCDF_DIR}
-                      ${YAML-CPP_DIR} ${OpenFAST_DIR} ${CMAKE_PREFIX_PATH})
+                      ${NetCDF_DIR} ${YAML-CPP_DIR} ${OpenFAST_DIR} ${CMAKE_PREFIX_PATH})
 find_package(MPI REQUIRED)
 find_package(Trilinos REQUIRED)
 find_package(TIOGA REQUIRED)
