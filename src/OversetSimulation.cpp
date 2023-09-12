@@ -92,7 +92,7 @@ void OversetSimulation::perform_overset_connectivity()
 
     m_timers_tg.tick("Connectivity");
     if (m_has_amr) m_tg.preprocess_amr_data();
-    //m_tg.profile();
+    m_tg.profile();
     m_tg.performConnectivity();
     if (m_has_amr) m_tg.performConnectivityAMR();
     m_timers_tg.tock("Connectivity");
