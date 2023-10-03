@@ -11,6 +11,11 @@
 #include "yaml-cpp/yaml.h"
 #include "tioga.h"
 
+// Workaround for MPI failures on Frontier
+#ifdef KOKKOS_ENABLE_HIP
+#include <hip/hip_runtime.h>
+#endif
+
 static std::string usage(std::string name)
 {
     return "usage: " + name +
@@ -36,6 +41,9 @@ replace_extension(const std::string& filepath, const std::string& newExt)
 
 int main(int argc, char** argv)
 {
+#ifdef KOKKOS_ENABLE_HIP
+    hipInit(0);
+#endif
     MPI_Init(&argc, &argv);
     int psize, prank;
     MPI_Comm_size(MPI_COMM_WORLD, &psize);
