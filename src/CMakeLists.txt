@@ -23,14 +23,14 @@ target_link_libraries(${EXAWIND_LIB_NAME} PUBLIC
   AMReX::amrex
   Nalu-Wind::nalu)
 
-# Solve -fallow-argument-mismatch from fortran possibly making its way into arguments passed to clang
-#if(CMAKE_CXX_COMPILER_ID MATCHES "^(Clang|AppleClang)$")
-#  set(TARGET_FLAGS "")
-#  get_target_property(TARGET_FLAGS MPI::MPI_Fortran INTERFACE_COMPILE_OPTIONS)
-#  message(STATUS "MPI fortran options are: ${TARGET_FLAGS}")
-#  if((NOT "${TARGET_FLAGS}" STREQUAL "") AND (NOT "${TARGET_FLAGS}" STREQUAL "TARGET_FLAGS-NOTFOUND"))
-#    message(STATUS "Removing -fallow-argument-mismatch from MPI fortran options if it exists...")
-#    string(REPLACE "-fallow-argument-mismatch" "" TARGET_FLAGS ${TARGET_FLAGS})
-#    set_target_properties(MPI::MPI_Fortran PROPERTIES INTERFACE_COMPILE_OPTIONS "${TARGET_FLAGS}")
-#  endif()
-#endif()
+# Solve -fsycl making its way into arguments passed to Kokkos
+if(CMAKE_CXX_COMPILER_ID MATCHES "^(IntelLLVM)$")
+  set(TARGET_FLAGS "")
+  get_target_property(TARGET_FLAGS AMReX::AMReX INTERFACE_COMPILE_OPTIONS)
+  message(STATUS "AMReX options are: ${TARGET_FLAGS}")
+  if((NOT "${TARGET_FLAGS}" STREQUAL "") AND (NOT "${TARGET_FLAGS}" STREQUAL "TARGET_FLAGS-NOTFOUND"))
+    message(STATUS "Removing -fallow-argument-mismatch from MPI fortran options if it exists...")
+    string(REPLACE "-fsycl" "" TARGET_FLAGS ${TARGET_FLAGS})
+    set_target_properties(AMReX::AMReX PROPERTIES INTERFACE_COMPILE_OPTIONS "${TARGET_FLAGS}")
+  endif()
+endif()
